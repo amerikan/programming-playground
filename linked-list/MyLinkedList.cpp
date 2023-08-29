@@ -1,5 +1,5 @@
 
-// g++ linkedlist.cpp -o linkedlist && ./linkedlist
+// g++ MyLinkedList.cpp -o MyLinkedList && ./MyLinkedList
 
 #include <iostream>
 
