@@ -65,7 +65,7 @@ class LinkedList {
 
   getFirst() {
     if (this.head === null) {
-      throw new Exception("List is empty");
+      throw new Error("List is empty");
     }
 
     return this.head.value;
@@ -73,7 +73,7 @@ class LinkedList {
 
   getLast() {
     if (this.head === null) {
-      throw new Exception("List is empty");
+      throw new Error("List is empty");
     }
 
     let current = this.head;
