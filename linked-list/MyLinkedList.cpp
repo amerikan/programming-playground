@@ -1,5 +1,5 @@
 
-// g++ cplusplus.cpp -o hello && ./hello
+// g++ linkedlist.cpp -o linkedlist && ./linkedlist
 
 #include <iostream>
 
