@@ -12,53 +12,46 @@ class LinkedList {
     this.head = null;
   }
 
-  addToFront(val) {
-    const node = new Node(val);
-    node.next = this.head;
+  addFirst(val) {
+    const newNode = new Node(val);
 
-    this.head = node;
-  }
+    if (this.head === null) {
+      this.head = newNode;
+    } else {
+      newNode.next = this.head;
 
-  addToBack(val) {
-    let current = this.head;
-
-    while (current.next !== null) {
-      current = current.next;
+      this.head = newNode;
     }
-
-    current.next = new Node(val);
   }
 
-  addAfter(needle, val) {
-    let current = this.head;
+  addLast(val) {
 
-    while (current) {
-      if (current.value === needle) {
-        const newNode = new Node(val);
-        newNode.next = current.next;
+    const newNode = new Node(val);
 
-        current.next = newNode;
+    if (this.head == null) {
+      this.head = newNode;
+    } else {
+      let current = this.head;
 
-        return;
+      while (current !== null && current.next !== null) {
+        current = current.next;
       }
 
-      current = current.next;
+      current.next = newNode;
     }
   }
 
-  removeFront() {
-    const head = this.head;
-
-    if (head) {
-      if (head.next) {
-        this.head = head.next;
+  removeFirst() {
+    if (this.head !== null) {
+      if (this.head.next) {
+        this.head = this.head.next;
       } else {
         this.head = null;
       }
     }
   }
 
-  removeBack() {
+  removeLast() {
     let current = this.head;
 
     if (current !== null) {
@@ -70,63 +63,33 @@ class LinkedList {
     }
   }
 
-  remove(needle) {
-    let previous = null;
-    let current = this.head;
-
-    while (current) {
-      if (current.value === needle) {
-        if (previous === null) {
-          this.head = current.next;
-        } else {
-          if (current.next) {
-            previous.next = current.next;
-          } else {
-            previous.next = null;
-          }
-        }
-
-        break;
-      }
-
-      previous = current;
-      current = current.next;
-    }
-  }
-
-  search(needle) {
-    let current = this.head;
-
-    while (current) {
-      if (current.value === needle) {
-        return true;
-      }
-
-      current = current.next;
+  getFirst() {
+    if (this.head === null) {
+      throw new Exception("List is empty");
     }
 
-    return false;
+    return this.head.value;
   }
 
-  update(needle, newVal) {
-    let current = this.head;
-
-    while (current) {
-      if (current.value === needle) {
-        current.value = newVal;
-
-        break;
-      }
-
-      current = current.next;
+  getLast() {
+    if (this.head === null) {
+      throw new Exception("List is empty");
     }
+
+    let current = this.head;
+
+    while(current.next !== null) {
+        current = current.next;
+    }
+
+    return current.value;
   }
 
-  traverse() {
+  display() {
     let current = this.head;
 
     while (current) {
-      console.log(current.value);
+      console.log(`[${current.value}]->`);
 
       current = current.next;
     }
@@ -136,38 +99,18 @@ class LinkedList {
 // Driver
 const ll = new LinkedList();
 
-ll.addToFront("fox");
-ll.addToFront("elephant");
-ll.addToFront("dog");
-ll.addToFront("cat");
-ll.addToFront("camel");
-ll.addToFront("bear");
-ll.addToFront("alligator");
-ll.addToFront("aardvark");
+ll.addLast(4);
+ll.addLast(3);
+ll.addLast(2);
+ll.addLast(1);
+ll.addFirst(5);
+ll.addFirst(6);
+ll.addFirst(7);
 
-ll.addToBack("hippo");
-ll.addToBack("ibis");
-ll.addToBack("iguana");
+ll.removeFirst();
+ll.removeLast();
 
-ll.update("alligator", "alpaca");
+ll.display();
 
-ll.removeFront();
-
-ll.removeBack();
-
-ll.remove("camel");
-
-ll.addAfter("fox", "giraffe");
-
-ll.traverse();
-
-console.log(ll.search("dog"));
-console.log(ll.search("turkey"));
-
-
-const ll2 = new LinkedList();
-ll2.addToFront("apple");
-ll2.addToFront("pear");
-ll2.addToFront("banana");
-ll2.remove("pear")
-ll2.traverse();
+console.log(`First Item: ${ll.getFirst()}`);
+console.log(`Last Item: ${ll.getLast()}`);
