@@ -8,3 +8,10 @@ Here's a list of "programs" I'll be writing. You can use this list too!
 
 1. **Linked Lists**
    - I think implementing linked lists is usually a good way to learn a new programming language because it exposes you to syntax, structures, loops, conditions, class/functions, generics (if any), amongst other in the given language.
+
+2. **Guessing Number**
+   - Generate a random number 0 to 100 then try to guess it in 5 tries. This will expose you to cli and input along with ranges/loops and comparisons.
+
+## Running
+
+Each file has instructions as a comment on how to run (and compile if needed)
