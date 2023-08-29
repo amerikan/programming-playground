@@ -1,4 +1,6 @@
 .DS_Store
 
 *.class
-.out
+a.out
+
+MyLinkedList
