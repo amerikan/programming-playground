@@ -7,7 +7,7 @@ public class MyLinkedList {
     public static void main(String args[]) {
 
         // String linked list
-        LL<String> ll = new LL<String>();
+        LL<String> ll = new LL<>();
 
         ll.addLast("cat");
         ll.addLast("dog");
@@ -24,7 +24,7 @@ public class MyLinkedList {
 
 
         // Integer linked list
-        LL<Integer> ll2 = new LL<Integer>();
+        LL<Integer> ll2 = new LL<>();
 
         ll2.addLast(4);
         ll2.addLast(3);
@@ -65,7 +65,7 @@ class LL<T> {
     }
 
     public void addFirst(T val) {
-        Node<T> newNode = new Node<T>(val);
+        Node<T> newNode = new Node<>(val);
 
         if (head == null) {
             head = newNode;
@@ -76,7 +76,7 @@ class LL<T> {
     }
 
     public void addLast(T val) {
-        Node<T> newNode = new Node<T>(val);
+        Node<T> newNode = new Node<>(val);
 
         if (head == null) {
             head = newNode;
