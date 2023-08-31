@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// gcc MyLinkedList.c # to compile
-// ./a.out # to run
+// gcc MyLinkedList.c && ./a.out
 
 // Can use typedef, to not have to use the more verbose
 // i.e. "struct LinkedList" everywhere we declare the struct
@@ -81,19 +80,23 @@ void removeFirst(struct LinkedList* list) {
 void removeLast(struct LinkedList* list) {
     if (list->head != NULL) {
 
-        struct Node* current = malloc(sizeof(struct Node));
+        if (list->head->next == NULL) {
+            list->head = NULL;
+        } else {
+            struct Node* current = malloc(sizeof(struct Node));
 
-        current = list->head;
+            current = list->head;
 
-        while(current != NULL && current->next->next != NULL) {
-            current = current->next;
+            while(current != NULL && current->next->next != NULL) {
+                current = current->next;
+            }
+
+            struct Node* tmp = current->next;
+
+            current->next = NULL;
+
+            free(tmp);
         }
-
-        struct Node* tmp = current->next;
-
-        current->next = NULL;
-
-        free(tmp);
     }
 }
 
