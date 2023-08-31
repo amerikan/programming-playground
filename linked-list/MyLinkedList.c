@@ -100,22 +100,33 @@ void removeLast(struct LinkedList* list) {
     }
 }
 
-int getFirst(struct LinkedList* list) {
-    // TODO: throw error if empty
-    return list->head->value;
-}
+int getFirst(struct LinkedList* list, int *value) {
+    if (list->head != NULL) {
+        *value = list->head->value; // modify passed value inside function
 
-int getLast(struct LinkedList* list) {
-    // TODO: throw error if empty
-    struct Node* current =  malloc(sizeof(struct Node));
-
-    current = list->head;
-
-    while(current != NULL && current->next != NULL) {
-        current = current->next;
+        return 0; // Success
     }
 
-    return current->value;
+    return -1; // Failure, in case of empty list
+}
+
+int getLast(struct LinkedList* list, int *value) {
+
+    if (list->head != NULL) {
+        struct Node* current =  malloc(sizeof(struct Node));
+
+        current = list->head;
+
+        while(current != NULL && current->next != NULL) {
+            current = current->next;
+        }
+
+        *value = current->value;
+
+        return 0; // Success
+    }
+
+    return -1; // Failure, in case of empty list
 }
 
 void freeList(struct LinkedList* list) {
@@ -156,11 +167,25 @@ int main() {
 
     display(ll);
 
-    printf("First Item: %d\n", getFirst(ll));
-    printf("Last Item: %d\n", getLast(ll));
+    int first;
+    int firstResult = getFirst(ll, &first); // pass reference so that it can be modified in function directly
+
+    if (firstResult == EXIT_SUCCESS) {
+        printf("First Item: %d\n", first);
+    } else {
+        printf("List is empty\n");
+    }
+
+    int last;
+    int lastResult = getLast(ll, &last);
+
+    if (lastResult == EXIT_SUCCESS) {
+        printf("Last Item: %d\n", last);
+    } else {
+        printf("List is empty\n");
+    }
 
     freeList(ll);
 
     return 0;
 }
-
