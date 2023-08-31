@@ -2,10 +2,10 @@
 //      i.e. javac MyLinkedList.java  produce -> MyLinkedList.class
 // run java <CompiledFile>.class
 //      i.e. java MyLinkedList
+// javac MyLinkedList.java && java MyLinkedList
 
 public class MyLinkedList {
     public static void main(String args[]) {
-
         // String linked list
         LL<String> ll = new LL<>();
 
@@ -21,7 +21,6 @@ public class MyLinkedList {
         } catch (Exception e) {
             System.out.println(e);
         }
-
 
         // Integer linked list
         LL<Integer> ll2 = new LL<>();
@@ -103,13 +102,17 @@ class LL<T> {
 
     public void removeLast() {
         if (head != null) {
-            Node<T> current = head;
+            if (head.next == null) {
+                head = null;
+            } else {
+                Node<T> current = head;
 
-            while(current != null && current.next.next != null) {
-                current = current.next;
+                while(current != null && current.next.next != null) {
+                    current = current.next;
+                }
+
+                current.next = null;
             }
-
-            current.next = null;
         }
     }
 
