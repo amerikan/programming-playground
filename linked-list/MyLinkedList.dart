@@ -1,19 +1,19 @@
 // dart MyLinkedList.dart
 
-class Node {
+class Node<U> {
     Node? next;
-    int? value;
+    U? value;
 
     // constructor
-    Node(int value) {
+    Node(U value) {
         this.value = value;
     }
 }
 
-class LinkedList {
+class LinkedList<T> {
     Node? head;
 
-    void addLast(int value) {
+    void addLast(T value) {
         var newNode = Node(value);
 
         if (this.head == null) {
@@ -29,7 +29,7 @@ class LinkedList {
         }
     }
 
-    void addFirst(int value) {
+    void addFirst(T value) {
         var newNode = Node(value);
 
         if (this.head == null) {
@@ -66,7 +66,7 @@ class LinkedList {
         }
     }
 
-    int? getFirst() {
+    T? getFirst() {
         if (this.head != null) {
             return this.head?.value;
         }
@@ -74,7 +74,7 @@ class LinkedList {
         return null;
     }
 
-    int? getLast() {
+    T? getLast() {
         if (this.head != null) {
             var current = this.head;
 
@@ -101,9 +101,9 @@ class LinkedList {
     }
 }
 
-
 void main() {
-    var ll = LinkedList();
+    // int linked list
+    var ll = LinkedList<int>();
 
     ll.addLast(4);
     ll.addLast(3);
@@ -121,4 +121,15 @@ void main() {
     print("First Item: ${ll.getFirst()}");
     print("Last Item: ${ll.getLast()}");
 
+    // string linked list
+    var ll2 = LinkedList<String>();
+
+    ll2.addLast("cat");
+    ll2.addLast("dog");
+    ll2.addFirst("alligator");
+
+    ll2.display();
+
+    print("First Item: ${ll2.getFirst()}");
+    print("Last Item: ${ll2.getLast()}");
 }
