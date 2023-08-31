@@ -46,6 +46,9 @@ func (l *LinkedList[T]) addFirst(value T) {
     }
 }
 
+// functions that begin with lower case are "private" and can
+// only be used within the file, use capital letter to make it
+// "exportable" to outside
 func (l *LinkedList[T]) removeFirst() {
     if l.head != nil {
         if l.head.next == nil {
