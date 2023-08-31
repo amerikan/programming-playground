@@ -57,13 +57,17 @@ class LinkedList {
 
     function removeLast(): void {
         if ($this->head != null) {
-            $current = $this->head;
+            if ($this->head->next) {
+                $current = $this->head;
 
-            while ($current->next->next) {
-                $current = $current->next;
+                while ($current->next->next) {
+                    $current = $current->next;
+                }
+
+                $current->next = null;
+            } else {
+                $this->head = null;
             }
-
-            $current->next = null;
         }
     }
 

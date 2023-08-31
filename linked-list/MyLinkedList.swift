@@ -52,13 +52,17 @@ class LinkedList<T> {
 
     func removeLast() {
         if head != nil {
-            var current = head;
+            if head?.next == nil {
+                head = nil
+            } else {
+                var current = head;
 
-            while current?.next != nil {
-                current = current?.next;
+                while current?.next?.next != nil {
+                    current = current?.next;
+                }
+
+                current?.next = nil;
             }
-
-            current?.next = nil;
         }
     }
 

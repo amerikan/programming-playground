@@ -40,12 +40,16 @@ class LinkedList:
 
     def removeLast(self):
         if self.head is not None:
-            current = self.head
 
-            while current.next.next:
-                current = current.next
+            if self.head.next:
+                current = self.head
 
-            current.next = None
+                while current.next.next:
+                    current = current.next
+
+                current.next = None
+            else:
+                self.head = None
 
     def getFirst(self):
         if self.head is not None:

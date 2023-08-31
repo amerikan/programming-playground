@@ -60,13 +60,17 @@ class LinkedList
 
     def removeLast
         unless @head.nil?
-            current = @head
+            if @head.next.nil?
+                @head = nil
+            else
+                current = @head
 
-            while current.next.next do
-                current = current.next
+                while current.next.next do
+                    current = current.next
+                end
+
+                current.next = nil
             end
-
-            current.next = nil
         end
     end
 

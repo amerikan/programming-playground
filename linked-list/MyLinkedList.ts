@@ -28,7 +28,6 @@ class MyNode<T> { // Named this way to avoid global Node name
     }
 
     addLast(val: T): void {
-
       const newNode = new MyNode<T>(val);
 
       if (this.head === null) {
@@ -55,14 +54,20 @@ class MyNode<T> { // Named this way to avoid global Node name
     }
 
     removeLast(): void {
-      let current = this.head;
+      if (this.head !== null) {
+        if (this.head.next === null) {
+          this.head = null;
+        } else {
+          let current = this.head;
 
-      if (current !== null) {
-        while (current.next !== null && current.next.next !== null) {
-          current = current.next;
+          if (current !== null) {
+            while (current.next !== null && current.next.next !== null) {
+              current = current.next;
+            }
+
+            current.next = null;
+          }
         }
-
-        current.next = null;
       }
     }
 
@@ -115,8 +120,12 @@ class MyNode<T> { // Named this way to avoid global Node name
 
   ll.display();
 
-  console.log(`First Item: ${ll.getFirst()}`);
-  console.log(`Last Item: ${ll.getLast()}`);
+  try {
+    console.log(`First Item: ${ll.getFirst()}`);
+    console.log(`Last Item: ${ll.getLast()}`);
+  } catch (e) {
+    console.error("List is empty");
+  }
 
   // String Linkedlist
   const ll2 = new LinkedList<string>();
@@ -131,5 +140,9 @@ class MyNode<T> { // Named this way to avoid global Node name
 
   ll2.display();
 
-  console.log(`First Item: ${ll2.getFirst()}`);
-  console.log(`Last Item: ${ll2.getLast()}`);
+  try {
+    console.log(`First Item: ${ll2.getFirst()}`);
+    console.log(`Last Item: ${ll2.getLast()}`);
+  } catch (e) {
+    console.error("List is empty");
+  }

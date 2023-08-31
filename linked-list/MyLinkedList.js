@@ -25,7 +25,6 @@ class LinkedList {
   }
 
   addLast(val) {
-
     const newNode = new Node(val);
 
     if (this.head == null) {
@@ -52,14 +51,20 @@ class LinkedList {
   }
 
   removeLast() {
-    let current = this.head;
+    if (this.head !== null) {
+      if (this.head.next === null) {
+        this.head = null;
+      } else {
+        let current = this.head;
 
-    if (current !== null) {
-      while (current.next !== null && current.next.next !== null) {
-        current = current.next;
+        if (current !== null) {
+          while (current.next !== null && current.next.next !== null) {
+            current = current.next;
+          }
+
+          current.next = null;
+        }
       }
-
-      current.next = null;
     }
   }
 
@@ -112,5 +117,9 @@ ll.removeLast();
 
 ll.display();
 
-console.log(`First Item: ${ll.getFirst()}`);
-console.log(`Last Item: ${ll.getLast()}`);
+try {
+  console.log(`First Item: ${ll.getFirst()}`);
+  console.log(`Last Item: ${ll.getLast()}`);
+} catch (e) {
+  console.error("List is empty!")
+}
