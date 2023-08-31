@@ -61,13 +61,18 @@ func (l *LinkedList[T]) removeFirst() {
 
 func (l *LinkedList[T]) removeLast() {
     if l.head != nil {
-        current := l.head
 
-        for current.next.next != nil {
-            current = current.next
+        if l.head.next == nil {
+            l.head = nil
+        } else {
+            current := l.head
+
+            for current.next.next != nil {
+                current = current.next
+            }
+
+            current.next = nil
         }
-
-        current.next = nil
     }
 }
 
