@@ -1,12 +1,12 @@
-
 // g++ MyLinkedList.cpp -o MyLinkedList && ./MyLinkedList
 
 #include <iostream>
 
 using namespace std;
 
+// template are similar to generics, but specialized at compile time, not run time
 template <class T>
-// template <typename T>
+// there's also template <typename T>
 class Node {
     public:
         T value;
@@ -28,14 +28,13 @@ class LinkedList {
             head = NULL;
         }
 
-        // Adds an item to the beginning of the list.
         void addFirst(U value) {
             Node<U> *node = new Node<U>(value);
 
             node->next = head;
             head = node;
         }
-        // Add an item to the end of the list
+
         void addLast(U value) {
             Node<U> *node = new Node<U>(value);
 
@@ -51,7 +50,7 @@ class LinkedList {
                 current->next = node;
             }
         }
-        // Remove an item from the beginning of the list.
+
         void removeFirst() {
             if (head != NULL) {
                 if (head->next) {
@@ -61,7 +60,7 @@ class LinkedList {
                 }
             }
         }
-        // Remove an item from the end of the list
+
         void removeLast() {
             if (head != NULL) {
                 if (head->next) {
@@ -78,25 +77,30 @@ class LinkedList {
             }
         }
 
-        // Get the item at the beginning of the list
-        U getFirst() {
-            // TOOD: what if empty linked list?
+        bool getFirst(U &value) {
+            if (head != NULL) {
+                value = head->value;
 
-            // if (head == NULL) {
-                return head->value;
-            // }
-        }
-
-        // Get the item at the end of the list
-        U getLast() {
-            // TOOD: what if empty linked list?
-            Node<U> *current = head;
-
-            while(current->next) {
-                current = current->next;
+                return true;
             }
 
-            return current->value;
+            return false;
+        }
+
+        bool getLast(U &value) {
+            if (head != NULL) {
+                Node<U> *current = head;
+
+                while(current->next) {
+                    current = current->next;
+                }
+
+                value = current->value;
+
+                return true;
+            }
+
+            return false;
         }
 
         void display() {
@@ -113,7 +117,7 @@ class LinkedList {
 };
 
 int main() {
-    // Try a string linked list
+    // string linked list
     LinkedList<string> *ll = new LinkedList<string>();
 
     ll->addLast("cat");
@@ -122,10 +126,25 @@ int main() {
 
     ll->display();
 
-    cout << "First Item: " << ll->getFirst() << endl;
-    cout << "Last Item: " << ll->getLast() << endl;
+    string first1;
+    int firstResult1 = ll->getFirst(first1);
 
-    // Try a int linked list
+    if (firstResult1) {
+        cout << "First Item: " << first1 << endl;
+    } else {
+        cout << "List is empty" << endl;
+    }
+
+    string second1;
+    int secondResult1 = ll->getLast(second1);
+
+    if (secondResult1) {
+        cout << "Last Item: " << second1<< endl;
+    } else {
+        cout << "List is empty" << endl;
+    }
+
+    // int linked list
     LinkedList<int> *ll2 = new LinkedList<int>();
 
     ll2->addLast(4);
@@ -134,14 +153,30 @@ int main() {
     ll2->addLast(1);
     ll2->addFirst(5);
     ll2->addFirst(6);
+    ll2->addFirst(7);
 
     ll2->removeFirst();
     ll2->removeLast();
 
     ll2->display();
 
-    cout << "First Item: " << ll2->getFirst() << endl;
-    cout << "Last Item: " << ll2->getLast() << endl;
+    int first2;
+    int firstResult2 = ll2->getFirst(first2);
+
+    if (firstResult2) {
+        cout << "First Item: " << first2 << endl;
+    } else {
+        cout << "List is empty" << endl;
+    }
+
+    int second2;
+    int secondResult2 = ll2->getLast(second2);
+
+    if (secondResult2) {
+        cout << "Last Item: " << second2<< endl;
+    } else {
+        cout << "List is empty" << endl;
+    }
 
     return 0;
 }
