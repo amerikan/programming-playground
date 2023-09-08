@@ -5,6 +5,8 @@
 
 (* types can be inferred, but sometimes must be explicit *)
 
+(* ===================================================================== *)
+(* ===================================================================== *)
 (* OOP impelementation *)
 class node (value: int) =
     (* can declare self. self refers to itself (this in some languages), though could be named anything i.e. s
@@ -104,9 +106,12 @@ class linked_list =
                         goNext n
     end
 
+let () = Printf.printf "Object Oriented way\n"
+
 let ll = new linked_list;;
 
-ll#addLast 4;;
+(* TODO: make polymorphic data to work with any type using 'a (alpha)  *)
+ll#addLast 4;; (* for most part ;; is optional though in some top-level is needed for ambiguous cases*)
 ll#addLast 3;;
 ll#addLast 2;;
 ll#addLast 1;;
@@ -125,8 +130,145 @@ let () =
         | None -> Printf.printf "List is empty"
         | Some first ->
             Printf.printf "First Item: %d\n" first;
-
     match ll#getLast with
         | None -> Printf.printf "List is empty"
         | Some last ->
-            Printf.printf "Last Item: %d\n" last;
+            Printf.printf "Last Item: %d\n" last
+
+(* ===================================================================== *)
+(* ===================================================================== *)
+(* Pure functional implementation using record types and helper functions *)
+(* I'm prefixing it with "f" to distinguish from oop implementation *)
+let () = Printf.printf "\nImperative functional way\n"
+
+type fnode = {
+    mutable next: fnode option;
+    mutable value: int
+}
+
+type flinked_list = {
+    mutable head: fnode option;
+}
+
+(* factories *)
+let create_fnode v = {
+    next = None;
+    value = v;
+}
+let create_flinkedlist = {
+    head = None;
+};;
+
+(* helpers *)
+let add_last (linkedlist: flinked_list) (vle: int) =
+    let nd = create_fnode vle in
+        let head = linkedlist.head in
+            match head with
+                | None ->
+                    linkedlist.head <- Some nd
+                | Some hn ->
+                    (* functions that can be recursive must be marked with rec *)
+                    let rec goNext (current: fnode) =
+                        let nextNode = current.next in
+                            match nextNode with
+                                | None ->
+                                    current.next <- Some nd
+                                | Some m ->
+                                    goNext m
+                    in
+                        goNext hn
+let add_first (linkedlist: flinked_list) (vle: int) : unit =
+    let nd = create_fnode vle in
+        let head = linkedlist.head in
+            match head with
+                | None ->
+                    linkedlist.head <- Some nd
+                | Some hn ->
+                    nd.next <- (Some hn);
+                    linkedlist.head <- Some nd
+let remove_first (linkedlist: flinked_list) : unit =
+    let head = linkedlist.head in
+        match head with
+            | None -> ()
+            | Some h ->
+                linkedlist.head <- h.next
+let remove_last (linkedlist: flinked_list) : unit =
+    let head = linkedlist.head in
+        match head with
+            | None -> ()
+            | Some hn ->
+                let rec goNextNext (current: fnode) =
+                    let nextNode = current.next in
+                        match nextNode with
+                            | None ->
+                                linkedlist.head <- None
+                            | Some nn ->
+                                let nextNextNode = nn.next in
+                                    match nextNextNode with
+                                        | None ->
+                                            current.next <- None
+                                        | Some _ ->
+                                            goNextNext nn
+                in
+                    goNextNext hn
+let get_first (linkedlist: flinked_list) : int option =
+    let head = linkedlist.head in
+        match head with
+            | None -> None
+            | Some h -> Some h.value
+let get_last (linkedlist: flinked_list) : int option =
+    let head = linkedlist.head in
+        match head with
+            | None -> None
+            | Some h ->
+                let rec goNext (current: fnode) =
+                    let nextNode = current.next in
+                        match nextNode with
+                            | None ->
+                                Some current.value
+                            | Some m ->
+                                goNext m
+                in
+                    goNext h
+let display (linkedlist: flinked_list) =
+    let head = linkedlist.head in
+        match head with
+            | None -> ()
+            | Some n ->
+                let rec goNext (current: fnode) =
+                    let nextNode = current.next in
+                        match nextNode with
+                            | None ->
+                                Printf.printf "[%d]->\n" current.value;
+                            | Some nn ->
+                                Printf.printf "[%d]->" current.value;
+                                goNext nn
+                in
+                    goNext n
+
+(* driver *)
+let fll = create_flinkedlist;;
+
+add_last fll 4;;
+add_last fll 3;;
+add_last fll 2;;
+add_last fll 1;;
+
+add_first fll 5;;
+add_first fll 6;;
+add_first fll 7;;
+
+remove_first fll;;
+remove_last fll;;
+
+display fll;;
+
+let () =
+    match get_first fll with
+        | None -> Printf.printf "List is empty"
+        | Some first ->
+            Printf.printf "First Item: %d\n" first;
+    match get_last fll with
+        | None -> Printf.printf "List is empty"
+        | Some last ->
+            Printf.printf "Last Item: %d\n" last
