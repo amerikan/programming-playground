@@ -19,7 +19,7 @@ class node (value: int) =
         method getValue : int = value
         method getNext : node option = next
         method setNext (newNext: node option) : unit = next <- newNext
-    end;;
+    end
 
 class linked_list =
     object (self)
@@ -90,19 +90,19 @@ class linked_list =
                         goNext h
         method display : unit =
             match head with
-            | None -> () (* unit value constant, a not useful value to dispose *)
-            | Some n ->
-                let rec goNext (current: node) =
-                    let nextNode = current#getNext in
-                        match nextNode with
-                            | None ->
-                                Printf.printf "[%d]->\n" current#getValue;
-                            | Some nn ->
-                                Printf.printf "[%d]->" current#getValue;
-                                goNext nn
-                in
-                    goNext n
-    end;;
+                | None -> () (* unit value constant, a not useful value to dispose *)
+                | Some n ->
+                    let rec goNext (current: node) =
+                        let nextNode = current#getNext in
+                            match nextNode with
+                                | None ->
+                                    Printf.printf "[%d]->\n" current#getValue;
+                                | Some nn ->
+                                    Printf.printf "[%d]->" current#getValue;
+                                    goNext nn
+                    in
+                        goNext n
+    end
 
 let ll = new linked_list;;
 
@@ -120,13 +120,13 @@ ll#removeLast;;
 
 ll#display;;
 
-match ll#getFirst with
-    | None -> Printf.printf "List is empty"
-    | Some first ->
-        Printf.printf "First Item: %d\n" first;
+let () =
+    match ll#getFirst with
+        | None -> Printf.printf "List is empty"
+        | Some first ->
+            Printf.printf "First Item: %d\n" first;
 
- match ll#getLast with
-    | None -> Printf.printf "List is empty"
-    | Some last ->
-        Printf.printf "Last Item: %d\n" last;
-
+    match ll#getLast with
+        | None -> Printf.printf "List is empty"
+        | Some last ->
+            Printf.printf "Last Item: %d\n" last;
