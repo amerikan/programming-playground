@@ -5,43 +5,49 @@
 
 -- To create our own types we use "data" keyword, which also allows recursive types.
 -- There's also "type", but that's just a way to create aliases for haskell types
-data LinkedList = Node Int (LinkedList) | Empty deriving (Show)
+data LinkedList a = Node a (LinkedList a) | Empty deriving (Show)
+-- this version is parametric types (polymorphic)
+
+-- could have done like this, but this would restrict to just Int's
+-- data LinkedList = Node Int (LinkedList) | Empty deriving (Show)
 
 {- we use deriing (Show) to say that it satisfies the Show typeclass
  (aka interfaces, protocols in other languages) -}
 {- LinkedList is the type, Node and Empty are type constructors -}
 
 -- denotes the types, usually not needed, but helps find bugs and document the code
-addLast :: LinkedList -> Int -> LinkedList
+addLast :: LinkedList a -> a -> LinkedList a
 -- below we just pattern match
 addLast Empty val = Node val Empty
 addLast (Node nval node) val = Node nval (addLast node val) -- recursive call
 -- above here we are "destructuring"
 
-addFirst :: LinkedList -> Int -> LinkedList
+addFirst :: LinkedList a -> a -> LinkedList a
 addFirst Empty val = Node val Empty
 addFirst (Node nval node) val = Node val (addFirst node nval)
 
-removeFirst :: LinkedList -> LinkedList
+removeFirst :: LinkedList a -> LinkedList a
 removeFirst Empty = Empty
 removeFirst (Node _ node) = node
 
-removeLast :: LinkedList -> LinkedList
+removeLast :: LinkedList a -> LinkedList a
 removeLast Empty = Empty
 removeLast (Node _ Empty) = Empty
 removeLast (Node val node) = Node val (removeLast node)
 
 -- haskell optional is called Maybe and is either Nothing or Just something (like None vs Some)
-getFirst :: LinkedList -> Maybe Int
+getFirst :: LinkedList a -> Maybe a
 getFirst Empty = Nothing
 getFirst (Node val node) = Just val
 
-getLast :: LinkedList -> Maybe Int
+getLast :: LinkedList a -> Maybe a
 getLast Empty = Nothing
 getLast (Node val Empty) = Just val
 getLast (Node val node) = getLast node
 
-display :: LinkedList -> IO()
+-- Show a => means that it must comply to the Show type class
+-- IO() usually means just some side effect
+display :: Show a => LinkedList a -> IO()
 display Empty = putStrLn ""
 display (Node val node) = do
   putStr("[" ++ (show val) ++ "]->")
