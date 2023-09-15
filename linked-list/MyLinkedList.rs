@@ -72,37 +72,37 @@ impl LinkedList {
         if let Some(h) = &self.head {
             if h.next.is_none() {
                 self.head = None;
-            } else {
-                if let Some(mut od) = self.head.take() {
-                    self.head = od.next.take();
-                }
+                return;
+            }
+
+            if let Some(mut od) = self.head.take() {
+                self.head = od.next.take();
             }
         }
     }
 
     // no return type implies void, we could be explicit and do "-> void"
     fn remove_last(&mut self) {
-        if let Some(hd) = &mut self.head {
+        if let Some (hd) = &self.head {
             if hd.next.is_none() {
                 self.head = None;
-            } else {
 
-                let mut current = &self.head;
+                return;
+            }
 
-                while let Some(nde) = current {
+            let mut current = &mut self.head;
 
-                    println!("{}", nde.value);
-
-                    if nde.next.is_none() {
-                        // TODO: remove last item!
-                        println!("REMOVE {}", nde.value);
+            while current.as_ref().unwrap().next.is_some() {
+                if let Some(n) = &current.as_ref().unwrap().next {
+                    if n.next.is_none() {
                         break;
                     }
-
-                    current = &nde.next;
-
                 }
+
+                current = &mut current.as_mut().unwrap().next;
             }
+
+            current.as_mut().unwrap().next = None;
         }
     }
 
